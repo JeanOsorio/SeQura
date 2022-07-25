@@ -6,10 +6,11 @@
   "homepage": ".",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server . --config webpack.config.dev.js"
+    "start": "NODE_ENV=development webpack-dev-server . --config webpack.config.dev.js",
+    "build:prod": "webpack . --config webpack.config.prod.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jean Osorio",
   "license": "ISC",
   "dependencies": {
     "react": "18.2.0",
