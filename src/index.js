@@ -14,14 +14,19 @@ function mount() {
   root = createRoot(container);
   root.render(
     <React.StrictMode>
-      <App merchantId={seQuraConfig.merchantId} updatePriceEvent={updatePriceEvent}/>
+      <App
+        merchantId={seQuraConfig.merchantId}
+        updatePriceEvent={updatePriceEvent}
+      />
     </React.StrictMode>,
   );
 }
 
 export function totalAmount(totalAmount) {
-  updatePriceEvent = new CustomEvent("UpdatePrice", {detail: {totalAmount}});
-   window.dispatchEvent(updatePriceEvent);
+  updatePriceEvent = new CustomEvent("UpdatePrice", {
+    detail: { totalAmount },
+  });
+  window.dispatchEvent(updatePriceEvent);
 }
 
 export function unmount() {

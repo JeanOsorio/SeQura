@@ -7,7 +7,6 @@ function App({ merchantId, updatePriceEvent }) {
   const [totalAmount, setTotalAmount] = useState(null);
   useEffect(() => {
     window.addEventListener("UpdatePrice", (event) => {
-      console.log("from component: ", event.detail.totalAmount);
       setTotalAmount(event.detail.totalAmount);
     });
     return () => {
@@ -16,7 +15,7 @@ function App({ merchantId, updatePriceEvent }) {
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper data-test-id="SeQuraPayments">
       <Header>
         <h3>Págalo en:</h3>
         <Button>más info</Button>
