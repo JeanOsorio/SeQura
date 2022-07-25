@@ -23,8 +23,12 @@ function mount() {
 }
 
 export function totalAmount(totalAmount) {
+  if (isNaN(parseInt(totalAmount))) {
+    // console.error("totalAmount argument must be a number");
+     throw new Error("totalAmount argument: must be a number");
+  }
   updatePriceEvent = new CustomEvent("UpdatePrice", {
-    detail: { totalAmount },
+    detail: { totalAmount: parseInt(totalAmount) },
   });
   window.dispatchEvent(updatePriceEvent);
 }
@@ -37,8 +41,7 @@ export function unmount() {
 
 export function init() {
   if (arguments.length === 0 || !arguments[0].merchantId) {
-    console.error("Your SeQura API token is required");
-    return;
+    throw new Error("Your SeQura API token is required");
   }
 
   if (typeof arguments[0] === "object") {
