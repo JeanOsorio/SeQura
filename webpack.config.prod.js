@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "public"),
     library: "SeQura",
-    filename: "sequraWidget.js",
+    filename: "sequra.js",
   },
   target: "web",
   resolve: {
@@ -22,4 +22,3 @@ module.exports = {
     ],
   },
 };
-
