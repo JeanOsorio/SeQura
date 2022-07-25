@@ -7,16 +7,26 @@ const seQuraConfig = {};
 let container;
 let root;
 
+let updatePriceEvent;
+
 function mount() {
   container = document.getElementById("SeQura");
   root = createRoot(container);
   root.render(
-    <App merchantId={seQuraConfig.merchantId} />,
+    <React.StrictMode>
+      <App merchantId={seQuraConfig.merchantId} updatePriceEvent={updatePriceEvent}/>
+    </React.StrictMode>,
   );
+}
+
+export function totalAmount(totalAmount) {
+  updatePriceEvent = new CustomEvent("UpdatePrice", {detail: {totalAmount}});
+   window.dispatchEvent(updatePriceEvent);
 }
 
 export function unmount() {
   window.removeEventListener("DOMContentLoaded", mount);
+  window.removeEventListener("UpdatePrice", updatePriceEvent);
   root.unmount();
 }
 
@@ -37,4 +47,5 @@ export function init() {
 
 if (process.env.NODE_ENV === "development") {
   mount();
+  window.SeQura.totalAmount = totalAmount;
 }

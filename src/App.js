@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Header, Select, Wrapper } from "./components";
 
-const App = () => {
+let updateTotalAmount = () => {};
+
+function App({ merchantId, updatePriceEvent }) {
+  const [totalAmount, setTotalAmount] = useState(null);
+  useEffect(() => {
+    window.addEventListener("UpdatePrice", (event) => {
+      console.log("from component: ", event.detail.totalAmount);
+      setTotalAmount(event.detail.totalAmount);
+    });
+    return () => {
+      window.removeEventListener("UpdatePrice", updatePriceEvent);
+    };
+  }, []);
+
   return (
     <Wrapper>
       <Header>
@@ -16,6 +29,8 @@ const App = () => {
       </Select>
     </Wrapper>
   );
-};
+}
+
+export { updateTotalAmount };
 
 export default App;
