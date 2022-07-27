@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import SeQuraServices from "./services/sequra";
 
 const seQuraConfig = {};
 
@@ -36,6 +37,11 @@ export function totalAmount(totalAmount) {
   window.dispatchEvent(updatePriceEvent);
 }
 
+export function track(data) {
+  SeQuraServices.postEvent({ merchantId: seQuraConfig.merchantId, ...data })
+    .then((response) => console.log(response));
+}
+
 export function unmount() {
   window.removeEventListener("DOMContentLoaded", mount);
   window.removeEventListener("UpdatePrice", updatePriceEvent);
@@ -60,4 +66,6 @@ if (process.env.NODE_ENV === "development") {
   mount();
   window.SeQura = {};
   window.SeQura.totalAmount = totalAmount;
+  window.SeQura.track = track;
+  seQuraConfig.merchantId = "123456789";
 }
