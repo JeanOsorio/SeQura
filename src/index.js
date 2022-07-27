@@ -25,10 +25,12 @@ function mount() {
 export function totalAmount(totalAmount) {
   if (isNaN(parseInt(totalAmount))) {
     // console.error("totalAmount argument must be a number");
-     throw new Error("totalAmount argument: must be a number");
+    throw new Error("totalAmount argument: must be a number");
   }
   updatePriceEvent = new CustomEvent("UpdatePrice", {
-    detail: { totalAmount: parseInt(totalAmount) },
+    detail: {
+      totalAmount: parseInt(totalAmount.toString().replace(",", "").replace(".", "")),
+    },
   });
   window.dispatchEvent(updatePriceEvent);
 }

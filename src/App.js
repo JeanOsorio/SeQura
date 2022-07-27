@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Button, Header, Select, Wrapper } from "./components";
+import SeQuraServices from "./services/sequra";
 
 let updateTotalAmount = () => {};
 
 function App({ merchantId, updatePriceEvent }) {
   const [totalAmount, setTotalAmount] = useState(null);
+  const [creditAgrement, setCreditAgreement] = useState([]);
+
   useEffect(() => {
-    window.addEventListener("UpdatePrice", (event) => {
-      setTotalAmount(event.detail.totalAmount);
-    });
-    return () => {
+    if (!totalAmount) {
+      window.addEventListener("UpdatePrice", (event) => {
+        setTotalAmount(event.detail.totalAmount / 100);
+      });
+    } else {
+      getCreditAgreementByAmount(totalAmount);
+    }
+
+    return (() => {
       window.removeEventListener("UpdatePrice", updatePriceEvent);
-    };
-  }, []);
+    });
+  }, [totalAmount]);
+
+  const getCreditAgreementByAmount = (amount) => {
+    SeQuraServices.getCreditAgreements(amount).then((response) =>
+      setCreditAgreement(response)
+    ).catch(error => console.error(error));
+  };
 
   return (
     <Wrapper data-test-id="SeQuraPayments">
