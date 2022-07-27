@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, CreditAgreements, Header, Modal, Wrapper } from "./components";
 import SeQuraServices from "./services/sequra";
 
-let updateTotalAmount = () => {};
-
 function App({ updatePriceEvent }) {
   const [totalAmount, setTotalAmount] = useState(null);
   const [creditAgreements, setCreditAgreements] = useState([]);
@@ -13,6 +11,7 @@ function App({ updatePriceEvent }) {
 
   useEffect(() => {
     if (!totalAmount) {
+      setSelectedCreditAgreement(null);
       window.addEventListener("UpdatePrice", (event) => {
         setTotalAmount(event.detail.totalAmount);
       });
@@ -37,6 +36,8 @@ function App({ updatePriceEvent }) {
   }, [selectedCreditAgreement]);
 
   const getCreditAgreementByAmount = (amount) => {
+     setCreditAgreements([]);
+     setSelectedCreditAgreement(null);
     SeQuraServices.getCreditAgreements(amount).then((response) => {
       setCreditAgreements(response);
       setSelectedCreditAgreement(response[0].instalment_count);
@@ -58,7 +59,11 @@ function App({ updatePriceEvent }) {
         selectedCreditAgreement={selectedCreditAgreement}
         setSelectedCreditAgreement={setSelectedCreditAgreement}
       />
-      <Modal isOpen={openModal} handleModal={handleModal} instalmentFee={instalmentFee}/>
+      <Modal
+        isOpen={openModal}
+        handleModal={handleModal}
+        instalmentFee={instalmentFee}
+      />
     </Wrapper>
   );
 }
