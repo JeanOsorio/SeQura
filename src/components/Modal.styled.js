@@ -4,12 +4,13 @@ import styled from "styled-components";
 const ModalWrapper = styled.div`
    width: 100%;
    height: 100%;
-   position: absolute;
+   position: fixed;
    display: grid;
    place-items: center;
    background: #00000024;
    top: 0;
    left: 0;
+   z-index: 1;
 `;
 
 const ModalContainer = styled.div`
