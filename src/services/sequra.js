@@ -13,7 +13,7 @@ const SeQuraServices = () => {
   };
   const postEvent = (data) => {
     return fetchRequest
-      .http(`events`, {}, {"Content-Type": "application/json"}, "POST", data)
+      .http(`events`, {}, { "Content-Type": "application/json" }, "POST", data)
       .then((response) => {
         return response;
       })
