@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, CreditAgreements, Header, Wrapper } from "./components";
+import { Button, CreditAgreements, Header, Modal, Wrapper } from "./components";
 import SeQuraServices from "./services/sequra";
 
 let updateTotalAmount = () => {};
 
 function App({ updatePriceEvent }) {
   const [totalAmount, setTotalAmount] = useState(null);
-  const [creditAgrements, setCreditAgreements] = useState([]);
+  const [creditAgreements, setCreditAgreements] = useState([]);
   const [selectedCreditAgreement, setSelectedCreditAgreement] = useState(null);
+  const [instalmentFee, setInstalmentFee] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (!totalAmount) {
@@ -23,6 +25,17 @@ function App({ updatePriceEvent }) {
     });
   }, [totalAmount]);
 
+  useEffect(() => {
+    if (!selectedCreditAgreement) {
+      return;
+    }
+
+    const fee = creditAgreements.find((ca) =>
+      ca.instalment_count === selectedCreditAgreement
+    );
+    setInstalmentFee(fee.instalment_fee);
+  }, [selectedCreditAgreement]);
+
   const getCreditAgreementByAmount = (amount) => {
     SeQuraServices.getCreditAgreements(amount).then((response) => {
       setCreditAgreements(response);
@@ -30,21 +43,23 @@ function App({ updatePriceEvent }) {
     }).catch((error) => console.error(error));
   };
 
-   return (
-      <Wrapper data-test-id="SeQuraPayments">
+  const handleModal = () => {
+    setOpenModal(!openModal);
+  };
+
+  return (
+    <Wrapper data-test-id="SeQuraPayments">
       <Header>
-      <h3>Págalo en:</h3>
-      <Button>más info</Button>
+        <h3>Págalo en:</h3>
+        <Button onClick={handleModal}>más info</Button>
       </Header>
       <CreditAgreements
-      creditAgreements={creditAgrements}
-      selectedCreditAgreement={selectedCreditAgreement}
-      setSelectedCreditAgreement={setSelectedCreditAgreement}
+        creditAgreements={creditAgreements}
+        selectedCreditAgreement={selectedCreditAgreement}
+        setSelectedCreditAgreement={setSelectedCreditAgreement}
       />
+      <Modal isOpen={openModal} handleModal={handleModal} instalmentFee={instalmentFee}/>
     </Wrapper>
   );
 }
-
-export { updateTotalAmount };
-
 export default App;

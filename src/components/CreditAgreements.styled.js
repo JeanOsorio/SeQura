@@ -1,9 +1,8 @@
-import React, { useId } from "react";
+import React from "react";
 import { Select } from "./Select.styled";
 
 const CreditAgreements = ({ creditAgreements, selectedCreditAgreement, setSelectedCreditAgreement }) => {
   const handleChange = (event) => {
-     console.log(event.target.value);
     setSelectedCreditAgreement(parseInt(event.target.value));
   };
   const renderOptions = () => {
