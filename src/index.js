@@ -24,12 +24,13 @@ function mount() {
 
 export function totalAmount(totalAmount) {
   if (isNaN(parseInt(totalAmount))) {
-    // console.error("totalAmount argument must be a number");
     throw new Error("totalAmount argument: must be a number");
   }
   updatePriceEvent = new CustomEvent("UpdatePrice", {
     detail: {
-      totalAmount: parseInt(totalAmount.toString().replace(",", "").replace(".", "")),
+      totalAmount: parseInt(
+        totalAmount.toString().replace(",", "").replace(".", ""),
+      ),
     },
   });
   window.dispatchEvent(updatePriceEvent);
@@ -57,5 +58,6 @@ export function init() {
 
 if (process.env.NODE_ENV === "development") {
   mount();
+  window.SeQura = {};
   window.SeQura.totalAmount = totalAmount;
 }

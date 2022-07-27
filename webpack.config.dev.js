@@ -5,7 +5,8 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "public"),
-    filename: "seQura.js",
+    library: "SeQura",
+     filename: "sequra.js",
   },
   target: "web",
   devServer: {

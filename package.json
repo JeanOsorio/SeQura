@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=development webpack-dev-server . --config webpack.config.dev.js",
-    "build:prod": "webpack . --config webpack.config.prod.js"
+    "build:prod": "webpack . --config webpack.config.prod.js",
+    "build": "webpack . --config webpack.config.dev.js"
   },
   "keywords": [],
   "author": "Jean Osorio",

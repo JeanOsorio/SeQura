@@ -1,6 +1,6 @@
 import { Button } from "./Button.styled";
 import { Header } from "./Header.styled";
-import { Select } from "./Select.styled";
 import { Wrapper } from "./Wrapper.styled";
+import {CreditAgreements} from "./CreditAgreements.styled"
 
-export { Button, Header, Select, Wrapper };
+export { Button, Header, CreditAgreements, Wrapper };
