@@ -19,7 +19,7 @@ This method allow you as a develper to send a amount and get a credit agreement.
 SeQura.totalAmount(39999)
 ```
 
-Paramether of the method is the total value of a product including the taxes and the last two digits represent the decimal numbers, i.e: 399.99  would be 39999.
+Paramether of the method is the total value of a product including the taxes and the last two digits represent the decimal numbers, i.e: 399,99  would be 39999.
 
 > Just in case, is the user send the amount with comma or dot as decimal indicator, we are going to remove it, also you can sent the amount as a string
 
@@ -30,6 +30,8 @@ This method allow the user or the developer to send some metrics to backend endp
 ```javascript
 SeQura.track({"context":"checkoutWidget", "type":"simulatorInstalmentChanged", "selectedInstalment": 12})
 ```
+
+> the track method always append the merchantId, so there no need to include it in the object data.
 
 ### Production Mode
 
@@ -88,7 +90,77 @@ SeQura.totalAmount(45000);
 
 ## How the widget works
 
+The library expose and populate the window object with the following method:
 
+ - SeQura.init
+ - SeQura.totalAmount
+ - SeQura.track
+ - SeQura.unmount
+
+#### SeQura.init
+This method is in charge of mounting the widget inside the web page, it needs two this: a `div` element with the id `SeQura` and object for the initial configuration with the `merchantId`  
+|Argument|Type|Description|
+|--|--|--|
+|config|object(required)  |Allow to send the initial configuration of the widget, for example de merchantId|
+
+use it like so:
+```javascript
+const config = {
+	merchantId: "1a2b3c4d5e6f7g8h9i"
+};
+SeQura.init(config);
+```
+
+#### SeQura.totalAmount
+This method is in charge of request the credit agreement base on the amount send it as argument and show the results in the widget.
+
+> This is a memoize method, so if you ask for an amount that is already
+> requested we return the response it is already on memory.
+
+|Argument|Type|Description|
+|--|--|--|
+|amount|string or integer (required)  |total amount of the product including the taxes|
+
+use it like so:
+```javascript
+SeQura.totalAmount(39999);
+SeQura.totalAmount(45000);
+SeQura.totalAmount(450,00);
+SeQura.totalAmount(399.99);
+SeQura.totalAmount("399.99");
+SeQura.totalAmount("450,00");
+```
+
+#### SeQura.track
+This method is in charge of send it metrics to the backend.
+
+|Argument|Type|Description|
+|--|--|--|
+|data|object (required)|this information is going to be send it to the backend|
+
+> This method would append the `merchantId`to the payload before send the data to the backend
+
+use it like so:
+```javascript
+SeQura.track({"context":"checkoutWidget", "type":"simulatorInstalmentChanged", "selectedInstalment": 12})
+```
+
+#### SeQura.unmount
+This method would remove manually the widget from the website.
+
+> This method also remove the listener that wait for the DOM to be ready so you has to refresh the web page in order to mount the widget again
+
+use it like so:
+```javascript
+SeQura.unmount()
+```
+
+### Things I would like to improve
+
+ 1. The track method immediately send the data to the backend, so it would be better to create a buffer to stack the metrics and when the buffer have an specify size send the data to the backend.
+ 2. I use styled components, so I could allow the user to send a object with a style theme in order to allow the widget show colors or fonts of the merchant web site.
+ 3. It took me more than 3 hours to complete the test, so I decide to skip the test, but I could make some test usint react-testing-library or cypress or puppeteer.
+ 4. naming, I don't feel confortable with the `totalAmount` name, maybe `getCreditAgreement` would be a better name.
 
 ### TODO List
 
