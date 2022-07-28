@@ -23,14 +23,21 @@ function mount() {
   );
 }
 
-export function totalAmount(totalAmount) {
-  if (isNaN(parseInt(totalAmount))) {
+export function totalAmount(amount) {
+  if (isNaN(parseInt(amount))) {
     throw new Error("totalAmount argument: must be a number");
   }
+
+  const sequraElement = document.querySelector('[data-test-id="SeQuraPayments"]');
+   if(!sequraElement) {
+      setTimeout(() => {totalAmount(amount)}, 200);
+      return;
+   }
+
   updatePriceEvent = new CustomEvent("UpdatePrice", {
     detail: {
       totalAmount: parseInt(
-        totalAmount.toString().replace(",", "").replace(".", ""),
+        amount.toString().replace(",", "").replace(".", ""),
       ),
     },
   });

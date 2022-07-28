@@ -66,16 +66,7 @@ npx http-server public -p 8082
  7. When the page is ready you should send the initial amount of the product in order to get a SeQura credit agreement, i.e.:
 
 ```javascript
-function getSeQuraPayments() {
- const sequraElement = document.querySelector('[data-test-id="SeQuraPayments"]');
- if(!sequraElement) {
-   setTimeout(getSeQuraPayments, 200);
-   return;
- }
  SeQura.totalAmount(39999);
-}
-
-getSeQuraPayments();
 ```
 then you would see something like this:
 
