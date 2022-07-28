@@ -25,7 +25,7 @@ Paramether of the method is the total value of a product including the taxes and
 
 #### track
 
-This method allow the user or the developer to send some metrics to backend endpoint. To use this method just write the followin on your command tab of your browser or from a method in your code:
+This method allow the user or the developer to send some metrics to backend endpoint. To use this method just write the followin on your command tab of your browser or from a method in :
 
 ```javascript
 SeQura.track({"context":"checkoutWidget", "type":"simulatorInstalmentChanged", "selectedInstalment": 12})
@@ -66,7 +66,16 @@ npx http-server public -p 8082
  7. When the page is ready you should send the initial amount of the product in order to get a SeQura credit agreement, i.e.:
 
 ```javascript
+function getSeQuraPayments() {
+ const sequraElement = document.querySelector('[data-test-id="SeQuraPayments"]');
+ if(!sequraElement) {
+   setTimeout(getSeQuraPayments, 200);
+   return;
+ }
  SeQura.totalAmount(39999);
+}
+
+getSeQuraPayments();
 ```
 then you would see something like this:
 
