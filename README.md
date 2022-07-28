@@ -25,7 +25,7 @@ Paramether of the method is the total value of a product including the taxes and
 
 #### track
 
-This method allow the user or the developer to send some metrics to backend endpoint. To use this method just writt the followin on your commando tab of your browser:
+This method allow the user or the developer to send some metrics to backend endpoint. To use this method just write the followin on your command tab of your browser or from a method in your code:
 
 ```javascript
 SeQura.track({"context":"checkoutWidget", "type":"simulatorInstalmentChanged", "selectedInstalment": 12})
@@ -72,7 +72,7 @@ function getSeQuraPayments() {
    setTimeout(getSeQuraPayments, 200);
    return;
  }
- SeQura.totalAmount("399.99");
+ SeQura.totalAmount(39999);
 }
 
 getSeQuraPayments();
@@ -80,6 +80,19 @@ getSeQuraPayments();
 then you would see something like this:
 
 ![SeQura Widget](docImages/widget.png "SeQuraWidget")
+
+8. if the product price change you have to call the `SeQura.totalAmount` method in order to get a new credit agreetment for the new total price of the product. i.e.:
+
+```javascript
+const currentPrice = $(this).attr("data-price").replace(" €", "");
+SeQura.totalAmount(currentPrice);
+```
+
+another example:
+
+```javascript
+SeQura.totalAmount(45000);
+```
 
 
 ## How the widget works
