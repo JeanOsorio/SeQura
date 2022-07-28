@@ -27,6 +27,16 @@ export function totalAmount(totalAmount) {
   if (isNaN(parseInt(totalAmount))) {
     throw new Error("totalAmount argument: must be a number");
   }
+
+  const sequraElement = document.querySelector(
+    '[data-test-id="SeQuraPayments"]',
+  );
+
+  if (!sequraElement) {
+    setTimeout(totalAmount(totalAmount), 200);
+    return;
+  }
+
   updatePriceEvent = new CustomEvent("UpdatePrice", {
     detail: {
       totalAmount: parseInt(
@@ -38,9 +48,9 @@ export function totalAmount(totalAmount) {
 }
 
 export function track(data) {
-   if(typeof data !== "object") {
-      throw new Error("Expect an object");
-   }
+  if (typeof data !== "object") {
+    throw new Error("Expect an object");
+  }
   SeQuraServices.postEvent({ merchantId: seQuraConfig.merchantId, ...data })
     .then((response) => console.log(response));
 }
