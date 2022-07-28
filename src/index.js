@@ -38,6 +38,9 @@ export function totalAmount(totalAmount) {
 }
 
 export function track(data) {
+   if(typeof data !== "object") {
+      throw new Error("Expect an object");
+   }
   SeQuraServices.postEvent({ merchantId: seQuraConfig.merchantId, ...data })
     .then((response) => console.log(response));
 }
