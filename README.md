@@ -171,6 +171,9 @@ SeQura.unmount()
 - [X] Espose a totalAmount to allow merchant to request a financial value
 - [X] Show select and modal component as show in mockup file
 - [ ] Allow merchant to styled the components
-- [ ] Create a buffer using a weakMap for the track method instead of sending the events instantly
+- [ ] Create a buffer using a weakMap for the track method instead of sending the events 
 
 
+### Final Decision
+
+SeQura team like the solution, but although the Communications Service is a personal code they complain about handle other request like patch or handle form data because this is not need it in the exercise. Another problem the SeQura team found was the SeQura Service go to the catch on the postEvent request even though the backend server was responding a 200 code. So if you want to use my solution as inspiration fix those things 
